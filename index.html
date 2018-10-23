@@ -310,7 +310,7 @@
                     
                     <li>INSIDE the <code>highlightFeature()</code> function, add the following line to make the chart as part of the mouseover event (check the sample code below if in doubt).
                     <pre><code class="language-javascript">makeChart(layer.feature.properties);</code></pre>
-                    Basically, the <code>layer.feature.properties</code> will replace the <code>props</code> variable used when defining <code>makeChart</code>. This enables access to the actual attributes/properties of the feature highlighted (we are calling <code>makeChart</code> inside <code>highlightFeature()</code>. Hope this makes sense. Feel free to ASK if you need more clarification on this.</li>
+                    Basically, the <code>layer.feature.properties</code> will replace the <code>props</code> variable used when defining <code>makeChart</code>. This enables access to the actual attributes/properties of the feature highlighted (we are calling <code>makeChart</code> inside <code>highlightFeature()</code>). Hope this makes sense. Feel free to ASK if you need more clarification on this.</li>
                     
                     <li>Now, the chart should show up below the map as a section when you hover on a borough. Hover on each feature to see an example so far (<a href="https://raw.githubusercontent.com/neiugis/lab5/gh-pages/map/chart.html" target="_blank">sample code</a>).</li>
                      <iframe src="map/chart.html" width=95% height=710 frameborder=0></iframe></ul>
