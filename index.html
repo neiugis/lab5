@@ -80,19 +80,21 @@
                           <li> Save the layer as a <b>GeoJson</b> file (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection!!!). </li>
                           <li>Use <b>Atom</b> to open the GeoJSON file, place the following at the very beginning of the GeoJSON document (see image below):
                               <pre><code class="language-javascript">var data =</code></pre>
-                           Note the <code>data</code> here is just a variable name. You may use other names as long as you refer to it with the same name later in the L.geoJson function.
+                           Note the <code>data</code> here is just a <b>variable name</b>. You may use other names as long as you refer to it with the same name when you add the data later using the <code>L.geoJson</code> function.
                           </li>
                            
                     <li>Save the changed GeoJSON as <code>london.js</code> to your <b>lab5 folder</b>. You may also name the file differently. Note the file extension is <code>.js</code>.</li>
                         </ul>    
 
+                    
+                    
                   <p><a id="prep" title="Create the Choropleth Map" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Create the Choropleth Map with Legend</h3>
-                    <p>We will first create the choropleth map with legend. This is basically what we have done in lab 3.</p>
+                    <p>We will first create the choropleth map with legend. This is basically the same as what we did in lab 3.</p>
                   <ul>
 
                           <li>Open your <b>code editor</b> and add the following lines. <br>
-                              Note we are <b>NOT using the full mode for now</b> as the chart will be first added below the map. <br>
+                              Note we are <b>NOT using the full screen mode for now</b> as the chart will be first added below the map (on the webpage). <br>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -231,7 +233,7 @@
                                </li>
             <li>Note you will need to use <code>your MapBox access token</code>. </li>     
            <li>Then, save the document as <code>map5.html</code> in your lab 5 folder. </li>   
-            <li>Basically, we created the choropleth map, with legend and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
+            <li>Basically, we created a choropleth map, with legend and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
                       <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
           </ul>
                
@@ -248,28 +250,35 @@
 &lt;!-- Load d3.js and c3.js --&gt;
 &lt;script src=&quot;https://d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.8/c3.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-                    Note that we also included the d3.js here as C3 uses functions from D3.</li>
+                    <b>Note we also included the d3.js here as C3 uses functions from D3.</b></li>
                     
-                    <li>Next, create a <code>div</code> as a placeholder for adding the chart. You may place the line right below the map div to stay organized.
+                    <li>Next, create a <code>div</code> as a placeholder for adding the chart. This idea is similar to creating a map div as placeholder for adding the map. You may place the line right below the map div to stay organized.
                     <pre><code class="language-html">&lt;div id=&quot;chart&quot;&gt;&lt;/div&gt;</code></pre></li>
-                    <li>To make the charts using the attribute data, we will define a function. I will call the function <code>makeChart</code>. You may use a different name. Place the function BEFORE the <code>highlightFeature()</code> function. Please read the comment lines for explanation.
+                    <li>To make the charts using the attribute data, we will define a function (below). I will call the function <code>makeChart</code>. You may use a different name. 
+                        <br>Place the function <b>BEFORE</b> the <code>highlightFeature()</code> function. This is because  we will use/call <code>makeChart</code> inside <code>highlightFeature</code>. <br>Please read the comment lines for explanations. And let me know if you have ANY questions.
                     <pre><code class="language-javascript">function makeChart(props) {
-// props is just a variable, which will be replaced with the layer's properties when using the function
+// props is just a variable, which will be replaced with the layer's properties 
+// when using the function
     c3.generate({   
     
-        bindto: '#chart',  // id of the chart div
+        bindto: '#chart',  // id of the chart div, as defined earlier
 
-        size: {  // size of the chart, by pixels
+        size: {  // size (height and width) of the chart, by pixels
             height: 180,
             width: 180        
         },
 
         title:{
-            text: props.NAME  // use borough name as the chart title 
+            text: props.NAME  // Use the NAME attribute as chart title 
+                              // This is displayed above the chart
+                              // You may use other strings, HTML elements or combined
         },
 
         data: {
-            columns: [  // use the attribute values as data for making the charts
+            // Define the actual data
+            // I use the attribute values as data for making the charts
+            // The strings are labels of the charts (shown in legend)
+            columns: [  
                 ['White', props.White],
                 ['Black', props.Black],
                 ['Asian', props.Asian],
@@ -282,12 +291,12 @@
 
         donut:{ // options to customize the donut chart
             label: {
-                show: false // set to not show labels on the slides
+                show: false // set to not show labels on the segments (too busy)
             },
             width: 30  // width of donut
         },
 
-        color:{ // colors of donut slices
+        color:{ // colors of donut segments, same order as the data 
             pattern:["#EC7063", "#5DADE2","#27AE60","#F4D03F","#E67E22"]
         }
     });
@@ -296,14 +305,14 @@
                     The <code>c3.generate()</code> is the C3 function for making charts and we define detailed functions for making different types of charts and customize chart styles. <br>
                     <b>Although we may follow similar syntax/format when making different charts using C3, please DO check the examples and documentations before making a new type of chart.</b>
                     <ul>
-                        <li>For example of making other types of charts, refer to the <a href="https://c3js.org/examples.html" target="_blank">C3 Examples page</a>.</li>
+                        <li>For examples of making other types of charts, refer to the <a href="https://c3js.org/examples.html" target="_blank">C3 Examples page</a>.</li>
                         <li>For more options of customizing charts, refer to the <a href="https://c3js.org/reference.html" target="_blank">C3 Reference page</a>.</li></ul></li> 
                     
-                    <li>INSIDE the <code>highlightFeature()</code> function, add the following line to make the chart as part of the mouseover event.
+                    <li>INSIDE the <code>highlightFeature()</code> function, add the following line to make the chart as part of the mouseover event (check the sample code below if in doubt).
                     <pre><code class="language-javascript">makeChart(layer.feature.properties);</code></pre>
-                    The <code>layer.feature.properties</code> will replace the <code>props</code> variable for defining the function, which enables access to the actual attributes/properties of the geojson file.</li>
+                    Basically, the <code>layer.feature.properties</code> will replace the <code>props</code> variable used when defining <code>makeChart</code>. This enables access to the actual attributes/properties of the feature highlighted (we are calling <code>makeChart</code> inside <code>highlightFeature()</code>. Hope this makes sense. Feel free to ASK if you need more clarification on this.</li>
                     
-                    <li>The chart shows up below the map as a section when you hover on a borough. Hover on each feature to see an example so far (<a href="https://raw.githubusercontent.com/neiugis/lab5/gh-pages/map/chart.html" target="_blank">sample code</a>)</li>
+                    <li>Now, the chart should show up below the map as a section when you hover on a borough. Hover on each feature to see an example so far (<a href="https://raw.githubusercontent.com/neiugis/lab5/gh-pages/map/chart.html" target="_blank">sample code</a>).</li>
                      <iframe src="map/chart.html" width=95% height=710 frameborder=0></iframe></ul>
                                       
                     
