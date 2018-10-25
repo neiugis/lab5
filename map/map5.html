@@ -81,9 +81,8 @@
             }
             
             function makeChart(props) {
-                var data = [props.White, props.Black, props.Asian, props.Mixed, props.Other];
 
-                var chart = c3.generate({
+               c3.generate({
                 bindto: '#chart',
                 size: {
                   height: 180,
