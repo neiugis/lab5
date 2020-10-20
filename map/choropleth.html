@@ -3,20 +3,17 @@
     <head>
         <title>Lab 5</title>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin=""/>
 
-        <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
 
         <script type="text/javascript" src="london.js"></script>
 
         <style type="text/css">
-            html, body { margin: 0; padding: 0; height: 100%; }
-            #map { min-height: 100%; }
-            
             /* Style of the Legend: adjust the values below to change the appearance of the legend pane*/
             .legend {
                 padding: 6px 8px;
@@ -39,8 +36,8 @@
     </head>
 
     <body>
-        <div id="map"></div>
-        
+        <div id="map" style="height: 500px"></div>
+
         <script type="text/javascript">
 
             var map = L.map('map', {
@@ -48,13 +45,11 @@
               zoom: 10
             });
 
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
-                maxZoom: 11,
-                minZoom: 8,
-                id: 'mapbox.light',
-                accessToken: 'pk.eyJ1IjoiY3VyZW1hbmdvIiwiYSI6ImNpcTQ4cGFwbDAxbmVmd25vZGNiOTVzeGEifQ.GWZByYkIft6eMRha69C8nw'
-            }).addTo(map);
+             L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+               attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+               maxZoom: 11,
+               minZoom: 5
+             }).addTo(map);
 
             function getColor(value) {
                 return value > 139 ? '#54278f':
@@ -73,26 +68,26 @@
                     fillOpacity: 0.9
                 };
             }
-            
+
             function highlightFeature(e) {
                 var layer = e.target;
-                
+
                 // You can adjust the values below to change the highlighting styles of features on mouseover
                 layer.setStyle({
                     weight: 5,
                     color: '#666',
-                    dashArray: '6', // defines the stroke dash pattern; check out the link for more: https://goo.gl/AWl5sC  
+                    dashArray: '6', // defines the stroke dash pattern; check out the link for more: https://goo.gl/AWl5sC
                     fillOpacity: 0.7
                 });
 
                 // Fix display layer problems with IE and Opera (no need to change anything)
                 if (!L.Browser.ie && !L.Browser.opera) {
                     layer.bringToFront();
-                }         
+                }
             }
-        
+
             var geojson;
-            
+
             function resetHighlight(e) {
                 geojson.resetStyle(e.target);
 
@@ -105,12 +100,12 @@
                     mouseout: resetHighlight,
                 });
             }
-                       
+
             geojson = L.geoJson(data, {
                 style:style,
                 onEachFeature: onEachFeature
             }).addTo(map);
-            
+
             var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
             legend.onAdd = function (map) {

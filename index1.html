@@ -43,7 +43,7 @@
                 <div class="wrap">
                   
                    <h1>Lab 5. Map and Charts <i class="fa fa-leaf"></i></h1> 
-                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 10/31</b></h3>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Thursday, 10/29</b></h3>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
 
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
-                  <p><i class="fa fa-spinner fa-spin"></i>  In Lab 3, we have introduced the steps of making an interactive choropleth map in Lab 3.  There are many different ways and ideas to add interactions to web maps. In this exercise, we will explore the combination of charts and maps to display charts as tooltips (you can scroll down the bottom to see <a href="#final"><b>an example of the final product</b></a>)</p>
+                  <p><i class="fa fa-spinner fa-spin"></i>  We introduced the steps of making an interactive choropleth map in Lab 3.  There are many different ways and ideas to add interactions to web maps. In this exercise, we will explore the combination of charts and maps to display charts as tooltips (you can scroll down the bottom to see <a href="#final"><b>an example of the final product</b></a>.</p>
                     <p><i class="fa fa-spinner fa-spin"></i>  For this week's review assignment (found on D2L), you will make stand-alone charts using the <a href="https://c3js.org/" target="_blank">C3 library</a>. For binding the charts with maps as tooltips, we use the same c3 functions and specifications. However, the procedures are slightly different that you will learn through this lab. </p>
                     <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. </p>
 
@@ -70,14 +70,17 @@
                           <li ><span style="font-weight:bold;color:red;">Getting Data: click <a href="https://drive.google.com/file/d/0BzvZaHCgmEmNZGxza2FzRFQ1Ym8/view?usp=sharing" target="_blank">here</a> to download my sample data.</span> If you are confident, you may go ahead and get the <a href="#deliverable">assignment data</a>.</li>
                           <li>Extract the files to your desired directory.</li>
                           <li>Open <b>QGIS</b> and add the shapefile. Take a look at its attribute table, which contains the demographic data of the Greater London area at borough level. Please familiarize yourself with the field names:
-                            <ul><li style="font-size:18px">Specifically, <b>Total</b> refers to total population in 2011. There are five fields containing population count for the different ethnic groups: <b>White</b>, <b>Black</b>, <b>Asian</b>, <b>Mixed</b>, <b>Other</b>. </li>
-                                <li><b>pop_den</b> contains the population density in people/hectare. </li>
+                            <ul>
                                 <li><b>NAME</b> gives the name of each borough.</li>
+                                <li style="font-size:18px"><b>Total</b> refers to total population in 2011. </li>
+                                <li>There are five fields containing population count for the different ethnic groups: <b>White</b>, <b>Black</b>, <b>Asian</b>, <b>Mixed</b>, and <b>Other</b>, which will be used to create the <b>pie/donut chart</b> in the tooltips. </li>
+                                <li><b>pop_den</b> contains the population density in people/hectare, which will be mapped in <b>graduated colors (choropleth map)</b>. </li>
+                                
                               <li>We will be mapping population density in graduated colors (choropleth map) and attach charts to each borough to show their ethnic composition.
                                 </li></ul></li>
-                          <li>Check the <b>Map Unit</b> in Project Properties and <b>simplify geometry</b> using an appropriate tolerance value.</li>
-                              <li>Decide the <b>data break values</b> (Layer Properties > Style). I will be using 5-class Natural Breaks in this case.</li>
-                          <li> Save the layer as a <b>GeoJson</b> file (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection!!!). </li>
+                          <li><b>Simplify geometry</b> using an appropriate tolerance value.</li>
+                              <li>Decide the <b>data break values</b> for mapping population density (right-click the layer and go to Layer Properties > Symbology, choose Graduated). I will be using 5-class Natural Breaks in this case.</li>
+                          <li> Save the layer as a <b>GeoJSON</b> file (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection!!!). </li>
                           <li>Use <b>Atom</b> to open the GeoJSON file, place the following at the very beginning of the GeoJSON document (see image below):
                               <pre><code class="language-javascript">var data =</code></pre>
                            Note the <code>data</code> here is just a <b>variable name</b>. You may use other names as long as you refer to it with the same name when you add the data later using the <code>L.geoJson</code> function.
@@ -90,7 +93,7 @@
                     
                   <p><a id="prep" title="Create the Choropleth Map" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Create the Choropleth Map with Legend</h3>
-                    <p>We will first create the choropleth map with legend. This is basically the same as what we did in lab 3.</p>
+                    <p>We will first create the choropleth map with a legend. This is basically the same as what we did in lab 3.</p>
                   <ul>
 
                           <li>Open your <b>code editor</b> and add the following lines. <br>
@@ -100,12 +103,12 @@
     &lt;head&gt;
         &lt;title&gt;Lab 5&lt;/title&gt;
 
-        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.css&quot;
-        integrity=&quot;sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==&quot;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.css&quot;
+        integrity=&quot;sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==&quot;
         crossorigin=&quot;&quot;/&gt;
 
-        &lt;script src=&quot;https://unpkg.com/leaflet@1.3.4/dist/leaflet.js&quot;
-        integrity=&quot;sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==&quot;
+        &lt;script src=&quot;https://unpkg.com/leaflet@1.6.0/dist/leaflet.js&quot;
+        integrity=&quot;sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==&quot;
         crossorigin=&quot;&quot;&gt;&lt;/script&gt;
 
         &lt;script type=&quot;text/javascript&quot; src=&quot;london.js&quot;&gt;&lt;/script&gt;
@@ -142,13 +145,11 @@
               zoom: 10
             });
 
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; OpenStreetMap contributors, CC-BY-SA, Imagery &copy; Mapbox',
-                maxZoom: 11,
-                minZoom: 8,
-                id: 'mapbox.light',
-                accessToken: 'your mapbox public access token'
-            }).addTo(map);
+             L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+               attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+               maxZoom: 11,
+               minZoom: 5
+             }).addTo(map);
 
             function getColor(value) {
                 return value &gt; 139 ? '#54278f':
@@ -231,9 +232,9 @@
    &lt;/body&gt;
 &lt;/html&gt;</code></pre>
                                </li>
-            <li>Note you will need to use <code>your MapBox access token</code>. </li>     
-           <li>Then, save the document as <code>map5.html</code> in your lab 5 folder. </li>   
-            <li>Basically, we created a choropleth map, with legend and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
+              
+           <li>Save the document as <code>map5.html</code> in your lab 5 folder. </li>   
+            <li>Basically, we created a choropleth map, with a legend and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
                       <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
           </ul>
                
