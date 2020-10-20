@@ -246,16 +246,16 @@
                 <ul>
                     <li>First, we need to include the C3 library in the html document. Place the following lines in the <code>head</code> section.
                         <pre><code class="language-html">&lt;!-- Load c3.css --&gt;
-&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.8/c3.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css&quot; rel=&quot;stylesheet&quot;&gt;
 
 &lt;!-- Load d3.js and c3.js --&gt;
 &lt;script src=&quot;https://d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.8/c3.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js&quot;&gt;&lt;/script&gt;</code></pre>
                     <b>Note we also included the d3.js here as C3 uses functions from D3.</b></li>
                     
-                    <li>Next, create a <code>div</code> as a placeholder for adding the chart. This idea is similar to creating a map div as placeholder for adding the map. You may place the line right below the map div to stay organized.
+                    <li>Next, create a <code>div</code> as a placeholder for adding the chart. You may place the following line right below the map div to stay organized. This idea is similar to creating a map div as placeholder for adding the map. 
                     <pre><code class="language-html">&lt;div id=&quot;chart&quot;&gt;&lt;/div&gt;</code></pre></li>
-                    <li>To make the charts using the attribute data, we will define a function (below). I will call the function <code>makeChart</code>. You may use a different name. 
+                    <li>To make the charts using the attribute data, we will define a function (below). I will call the function <code>makeChart</code>. You may use a different name if you prefer, as long as you call this function by name later. 
                         <br>Place the function <b>BEFORE</b> the <code>highlightFeature()</code> function. This is because  we will use/call <code>makeChart</code> inside <code>highlightFeature</code>. <br>Please read the comment lines for explanations. And let me know if you have ANY questions.
                     <pre><code class="language-javascript">function makeChart(props) {
 // props is just a variable, which will be replaced with the layer's properties 
