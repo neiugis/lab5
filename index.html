@@ -79,9 +79,9 @@
                               <li>We will be mapping population density in graduated colors (choropleth map) and attach charts to each borough to show their ethnic composition.
                                 </li></ul></li>
                           <li><b>Simplify geometry</b> using an appropriate tolerance value.</li>
-                              <li>Decide the <b>data break values</b> for mapping population density (right-click the layer and go to Layer Properties > Symbology, choose Graduated). I will be using 5-class Natural Breaks in this case.</li>
+                              <li>Decide the <b>data break values</b> for mapping population density (right-click the layer and go to Properties > Symbology, choose Graduated). I will be using 5-class Natural Breaks in this case.</li>
                           <li> Save the layer as a <b>GeoJSON</b> file (Be sure to use <b>EPSG:4326 - WGS 84</b> as the projection!!!). </li>
-                          <li>Use <b>Atom</b> to open the GeoJSON file, place the following at the very beginning of the GeoJSON document (see image below):
+                          <li>Use your code editor to open the GeoJSON file, place the following at the very beginning of the GeoJSON document (see image below):
                               <pre><code class="language-javascript">var data =</code></pre>
                            Note the <code>data</code> here is just a <b>variable name</b>. You may use other names as long as you refer to it with the same name when you add the data later using the <code>L.geoJson</code> function.
                           </li>
