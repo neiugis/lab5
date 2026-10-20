@@ -447,7 +447,14 @@ geojson = L.geoJson(data, {
             style:style,
             onEachFeature: onEachFeature
         }).bindTooltip(tooltip).addTo(map);</code></pre></div></li>
-                    <li>Finally, we need to change <b>when</b> the chart is drawn. <b>Delete</b> the <code>makeChart(layer.feature.properties);</code> line from INSIDE the <code>highlightFeature()</code> function. Then add the following lines right <b>BELOW</b> the <code>L.geoJson</code> portion:
+                    <li><b>Test your map before moving on.</b> Save the file and refresh your browser. Then try the following:
+                        <ul>
+                            <li>Hover over a borough. The chart should show up in the tooltip.</li>
+                            <li>Move your mouse <b>off all the boroughs</b> (for example, to an empty part of the map outside London).</li>
+                            <li>Now hover over a different borough. Then scroll down and look <b>below the map</b>.</li>
+                        </ul>
+                        What do you notice? Repeat a few times. Moving directly from one borough to the next one may look fine. The problem shows up when the mouse leaves the boroughs and comes back. Try to describe what is happening before you read the next step.</li>
+                    <li>To fix this, we need to change <b>when</b> the chart is drawn. <b>Delete</b> the <code>makeChart(layer.feature.properties);</code> line from INSIDE the <code>highlightFeature()</code> function. Then add the following lines right <b>BELOW</b> the <code>L.geoJson</code> portion:
 <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>

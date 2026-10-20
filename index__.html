@@ -447,6 +447,16 @@ geojson = L.geoJson(data, {
             style:style,
             onEachFeature: onEachFeature
         }).bindTooltip(tooltip).addTo(map);</code></pre></div></li>
+                    <li>Finally, we need to change <b>when</b> the chart is drawn. <b>Delete</b> the <code>makeChart(layer.feature.properties);</code> line from INSIDE the <code>highlightFeature()</code> function. Then add the following lines right <b>BELOW</b> the <code>L.geoJson</code> portion:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+geojson.on('tooltipopen', function(e) {
+    makeChart(e.layer.feature.properties);
+});</code></pre></div>
+                        Why? When the tooltip closes, Leaflet takes the chart <code>div</code> off the page. If we try to draw the chart while the <code>div</code> is off the page, billboard.js cannot find it. It then makes a new chart below the map instead. The <code>tooltipopen</code> <b>event</b> waits until the tooltip (with the chart <code>div</code> inside) is back on the page, and then draws the chart. Here, <code>e.layer</code> is the feature under the mouse, so <code>e.layer.feature.properties</code> gives us its attributes, just like <code>layer.feature.properties</code> did before.</li>
                     <li>Below is the final map with charts as tooltips (<a href="https://raw.githubusercontent.com/neiugis/lab5/gh-pages/map/map5.html" target="_blank">sample code</a>)</li>
                     <iframe id="final" src="map/map5.html" width=95% height=520 frameborder=0></iframe></ul>
                     
