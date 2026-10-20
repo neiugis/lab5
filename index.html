@@ -122,7 +122,7 @@
                 <div class="wrap">
                   
                    <h1>Lab 5. Map and Charts <i class="fa fa-leaf"></i></h1> 
-                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 11/6</b></h3>
+                  <h3 style="color:#F6F20D"><b><i class="fa fa-spinner fa-spin"></i>  Due: 11:59 pm, Wednesday, 11/4</b></h3>
                 </div>
             </div>
 
@@ -134,8 +134,8 @@
 
                   <p><a id="overview" title="Overview" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Overview</h3>
-                  <p><i class="fa fa-spinner fa-spin"></i>  We introduced the steps of making an interactive choropleth map in Lab 3.  There are many different ways and ideas to add interactions to web maps. In this exercise, we will explore the combination of charts and maps to display charts as tooltips (you can scroll down the bottom to see <a href="#final"><b>an example of the final product</b></a>.</p>
-<!--                    <p><i class="fa fa-spinner fa-spin"></i>  For this week's review assignment (found on D2L), you will make stand-alone charts using the <a href="https://c3js.org/" target="_blank">C3 library</a>. For binding the charts with maps as tooltips, we use the same c3 functions and specifications. However, the procedures are slightly different that you will learn through this lab. </p>-->
+                  <p><i class="fa fa-spinner fa-spin"></i>  We introduced the steps of making an interactive choropleth map in Lab 3.  There are many different ways and ideas to add interactions to web maps. In this exercise, we will explore the combination of charts and maps to display charts as tooltips (you can scroll down the bottom to see <a href="#final"><b>an example of the final product</b></a>).</p>
+<!--                    <p><i class="fa fa-spinner fa-spin"></i>  For this week's review assignment (found on D2L), you will make stand-alone charts using the <a href="https://naver.github.io/billboard.js/" target="_blank">billboard.js library</a>. For binding the charts with maps as tooltips, we use the same billboard.js functions and specifications. However, the procedures are slightly different that you will learn through this lab. </p>-->
                     <p><i class="fa fa-spinner fa-spin"></i>  Please read the instructions carefully (including the explanations of each step) and complete the assignment in the <a href="#deliverable">Deliverables</a> section at the bottom. </p>
 
 
@@ -234,8 +234,8 @@
               zoom: 10
             });
 
-             L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-               attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+               attribution: 'Tiles &amp;copy; Esri &amp;mdash; Esri, DeLorme, NAVTEQ',
                maxZoom: 11,
                minZoom: 5
              }).addTo(map);
@@ -323,7 +323,7 @@
                                </li>
               
            <li>Save the document as <code>map5.html</code> in your lab 5 folder. </li>   
-            <li>Basically, we created a choropleth map, with a legend and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
+            <li>Basically, we created a choropleth map, with a legend (I used integer for population density) and mouseover events (features are highlighted when mouseover). There is no tooltip added yet at this point (see the example below):</li>
                       <iframe src="map/choropleth.html" width=95% height=570 frameborder=0></iframe>
           </ul>
                
@@ -331,21 +331,20 @@
                     
                   <p><a id="chart" title="Make the Charts" class="toc-item"></a></p>
                   <h3><i class="fa fa-paint-brush"></i> Make the Charts</h3>
-                    <p>We use <a href="https://c3js.org/" target="_blank">C3</a> for making the charts. C3 is a D3-based reusable chart library, which contains ready-to-use functions for chart making.</p>
+                    <p>We use <a href="https://naver.github.io/billboard.js/" target="_blank">billboard.js</a> for making the charts. billboard.js is a chart library built on D3. It contains ready-to-use functions for making charts.</p>
                 <ul>
-                    <li>First, we need to include the C3 library in the html document. Place the following lines in the <code>head</code> section.
+                    <li>First, we need to include the billboard.js library in the html document. Place the following lines in the <code>head</code> section.
 <div class="code-container">
                                
                             <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
                                
                                <pre><code class="language-js">
-&lt;!-- Load c3.css --&gt;
-&lt;link href=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;!-- Load the billboard.js stylesheet --&gt;
+&lt;link href=&quot;https://cdn.jsdelivr.net/npm/billboard.js@4.1.1/dist/billboard.min.css&quot; rel=&quot;stylesheet&quot;&gt;
 
-&lt;!-- Load d3.js and c3.js --&gt;
-&lt;script src=&quot;https://d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js&quot;&gt;&lt;/script&gt;</code></pre></div>
-                    <b>Note we also included the d3.js here as C3 uses functions from D3.</b></li>
+&lt;!-- Load billboard.js (the &quot;pkgd&quot; version already includes D3) --&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/billboard.js@4.1.1/dist/billboard.pkgd.min.js&quot;&gt;&lt;/script&gt;</code></pre></div>
+                    <b>Note: billboard.js uses functions from D3. The &quot;pkgd&quot; (packaged) file already includes D3, so you do not need to load D3 separately.</b></li>
                     
                     <li>Next, create a <code>div</code> as a placeholder for adding the chart. You may place the following line right below the map div to stay organized. This idea is similar to creating a map div as placeholder for adding the map. 
                         <div class="code-container">
@@ -364,7 +363,7 @@
 function makeChart(props) {
 // props is just a variable, which will be replaced with the layer's properties 
 // when using the function
-    c3.generate({   
+    bb.generate({   
     
         bindto: '#chart',  // id of the chart div, as defined earlier in the chart div
 
@@ -402,16 +401,16 @@ function makeChart(props) {
         },
 
         color:{ // colors of donut segments, same order as the data defined under columns
-            pattern:["#EC7063", "#5DADE2","#27AE60","#F4D03F","#E67E22"]
+            pattern:["#E69F00", "#56B4E9", "#009E73", "#0072B2", "#CC79A7"] // a colorblind-safe set (Okabe-Ito)
         }
     });
 }</code></pre></div>
                     Note the charts will not show up at this point, as we haven't actually used the function for making the charts.<br>
-                    The <code>c3.generate()</code> is the C3 function for making charts and we define detailed functions for making different types of charts and customize chart styles. <br>
-                    <b>Although we may follow similar syntax/format when making different charts using C3, please DO check the examples and documentations before making a new type of chart.</b>
+                    The <code>bb.generate()</code> is the billboard.js function for making charts and we define detailed functions for making different types of charts and customize chart styles. <br>
+                    <b>Although we may follow similar syntax/format when making different charts using billboard.js, please DO check the examples and documentations before making a new type of chart.</b>
                     <ul>
-                        <li>For examples of making other types of charts, refer to the <a href="https://c3js.org/examples.html" target="_blank">C3 Examples page</a>.</li>
-                        <li>For more options of customizing charts, refer to the <a href="https://c3js.org/reference.html" target="_blank">C3 Reference page</a>.</li></ul></li> 
+                        <li>For examples of making other types of charts, refer to the <a href="https://naver.github.io/billboard.js/demo/" target="_blank">billboard.js Examples page</a>.</li>
+                        <li>For more options of customizing charts, refer to the <a href="https://naver.github.io/billboard.js/release/latest/doc/" target="_blank">billboard.js API documentation</a>.</li></ul></li> 
                     
                     <li>INSIDE the <code>highlightFeature()</code> function, add the following line to make the chart as part of the mouseover event (check the sample code below if in doubt).
 <div class="code-container">
@@ -448,6 +447,16 @@ geojson = L.geoJson(data, {
             style:style,
             onEachFeature: onEachFeature
         }).bindTooltip(tooltip).addTo(map);</code></pre></div></li>
+                    <li>Finally, we need to change <b>when</b> the chart is drawn. <b>Delete</b> the <code>makeChart(layer.feature.properties);</code> line from INSIDE the <code>highlightFeature()</code> function. Then add the following lines right <b>BELOW</b> the <code>L.geoJson</code> portion:
+<div class="code-container">
+                               
+                            <button class="copy-btn" title="Click to copy" onclick="copyToClipboard(this)"><i class="fa-regular fa-copy"></i> <b>Copy Code</b></button>
+                               
+                               <pre><code class="language-js">
+geojson.on('tooltipopen', function(e) {
+    makeChart(e.layer.feature.properties);
+});</code></pre></div>
+                        Why? When the tooltip closes, Leaflet takes the chart <code>div</code> off the page. If we try to draw the chart while the <code>div</code> is off the page, billboard.js cannot find it. It then makes a new chart below the map instead. The <code>tooltipopen</code> <b>event</b> waits until the tooltip (with the chart <code>div</code> inside) is back on the page, and then draws the chart. Here, <code>e.layer</code> is the feature under the mouse, so <code>e.layer.feature.properties</code> gives us its attributes, just like <code>layer.feature.properties</code> did before.</li>
                     <li>Below is the final map with charts as tooltips (<a href="https://raw.githubusercontent.com/neiugis/lab5/gh-pages/map/map5.html" target="_blank">sample code</a>)</li>
                     <iframe id="final" src="map/map5.html" width=95% height=520 frameborder=0></iframe></ul>
                     
@@ -465,11 +474,12 @@ geojson = L.geoJson(data, {
                    <p>However, you will need to <b>calculate new field(s) in QGIS</b> for the final maps in order to map standardized data, e.g., population density as opposed to total population. It is possible to calculate new field using math operators and more complicated functions. In addition, you could calculate polygon areas in QGIS, which would be useful for standardizing aggregated data. I have made two short tutorials and hope they are helpful:</p>
                     <ul><li><a href="CalculateArea.pdf" target="_blank">Calculate polygon areas</a> in QGIS.</li>
                         <li><a href="CalculateDensity.pdf" target="_blank">Calculate population density</a> in QGIS, given a total population field and a total area field (in appropriate areal unit for measuring population density, <i>e.g., square miles, square kilometers</i>).</li></ul>
+                    <ul>
                         <li>Then, create a <mark>choropleth map with a different type of chart, e.g., pie chart, bar chart</mark> as popups or tooltips when mouseover. Make sure to use <mark>appropriate attributes (standardized data) and classes</mark> for the choropleth map. 
                         </li>
                       
                         <li>Your final map will be graded based on its <b>overall design and accuracy, e.g., proper use of attributes and charts, colors, labels, choropleth map symbols and data classification, etc.</b></li>
-                        <li>Host your map via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any associated data files to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=237080&ou=3020560" target="_blank">D2L</a>. </li><br>
+                        <li>Host your map via GitHub (Make sure to rename the html file as <code>index.html</code> and upload any associated data files to the repository!!!) and submit the url through <a href="https://neiu.desire2learn.com/d2l/lms/dropbox/admin/mark/folder_submissions_users.d2l?db=237080&ou=3048274" target="_blank">D2L</a>. </li><br>
                         
                     </ul>
 
@@ -481,7 +491,7 @@ geojson = L.geoJson(data, {
           <footer>
             <div class="wrap">
 
-              <p>Copyright &copy; Ting Liu 2024</p>
+              <p>Copyright &copy; Ting Liu 2026</p>
             <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
             </div>
           </footer>
